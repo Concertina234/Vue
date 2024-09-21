@@ -4,7 +4,7 @@ import { useTodoList } from '@/composables/useTodoList';
 
 const todo = ref<string | undefined>();
 const isEdit = ref(false);
-const { todoList, add, show, edit, del } = useTodoList();
+const { todoList, add, show, edit, del, check } = useTodoList();
 
 const addTodo = () => {
   if(!todo.value) return;
@@ -30,6 +30,10 @@ const deteleTodo = (id: number) => {
   isEdit.value = false;
   del(id);
 };
+
+const changeCheck = (id: number) => {
+  check(id);
+};
 </script>
 
 <template>
@@ -45,8 +49,8 @@ const deteleTodo = (id: number) => {
 
   <div class="box_list">
     <div class="todo_list" v-for="todo in todoList" :key="todo.id">
-      <div class="todo">
-        <input type="checkbox" class="check" />
+      <div class="todo" :class="{ fin: todo.checked}">
+        <input type="checkbox" class="check" @change="changeCheck(todo.id)" :checked="todo.checked"/>
         <label>{{ todo.task }}</label>
       </div>
       <div class="btns">
@@ -117,5 +121,11 @@ const deteleTodo = (id: number) => {
 
 .pink {
   background-color: #ff4081;
+}
+
+.fin {
+  color:  #777;
+  text-decoration: line-through;
+  background-color: #ddd;
 }
 </style>
