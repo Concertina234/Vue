@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useTodoList } from '@/composables/useTodoList';
+import BaseButton from '@/components/BaseButton.vue';
+import ButtonAdd from '@/components/ButtonAdd.vue';
+import ButtonDel from '@/components/ButtonDel.vue';
+import ButtonEdit from '@/components/ButtonEdit.vue';
+import ButtonShow from '@/components/ButtonShow.vue';
 
 const todo = ref<string | undefined>();
 const isEdit = ref(false);
-const { todoList, add, show, edit, del, check } = useTodoList();
+const { todoList, add, show, edit, del, check, countFin } = useTodoList();
 
 const addTodo = () => {
   if(!todo.value) return;
@@ -43,8 +48,8 @@ const changeCheck = (id: number) => {
       class="todo_input"
       v-model="todo"
       placeholder="+ TODOを入力" />
-      <button class="btn green" @click="editTodo" v-if="isEdit">変更</button>
-      <button class="btn" @click="addTodo" v-else>追加</button>
+      <ButtonEdit @edit-click="editTodo" v-if="isEdit" />
+      <ButtonAdd @add-click="addTodo" v-else />
   </div>
 
   <div class="box_list">
@@ -54,10 +59,15 @@ const changeCheck = (id: number) => {
         <label>{{ todo.task }}</label>
       </div>
       <div class="btns">
-        <button class="btn green" @click="showTodo(todo.id)">編</button>
-        <button class="btn pink" @click="deteleTodo(todo.id)">削</button>
+        <ButtonShow @show-click="showTodo(todo.id)" />
+        <ButtonDel @del-click="deteleTodo(todo.id)" />
       </div>
     </div>
+  </div>
+
+  <div class="finCount">
+    <span>完了：{{ countFin }}、</span>
+    <span>未完了：{{ todoList.length - countFin }}</span>
   </div>
 </template>
 
@@ -127,5 +137,10 @@ const changeCheck = (id: number) => {
   color:  #777;
   text-decoration: line-through;
   background-color: #ddd;
+}
+
+.finCount {
+  margin-top: 8px;
+  font-size: 0.8em;
 }
 </style>

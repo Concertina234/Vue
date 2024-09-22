@@ -1,6 +1,6 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-export const useTodoList = (id: number) => {
+export const useTodoList = () => {
   const todoList = ref<{ id: number; task: string; checked: boolean }[]>([]);
   const ls = localStorage.todoList;
 
@@ -62,5 +62,10 @@ export const useTodoList = (id: number) => {
     }
   };
 
-  return  { todoList, add, show, edit, del, check };
+  const countFin = computed(() => {
+    const finArr = todoList.value.filter((todo) => todo.checked);
+    return finArr.length;
+  });
+
+  return  { todoList, add, show, edit, del, check, countFin };
 };
