@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import MainTodo from '@/components/MainTodo.vue'
+import { useRouter } from 'vue-router';
+
 import TheFooter from '@/components/TheFooter.vue';
 import TheHeader from '@/components/TheHeader.vue';
+
+const router = useRouter();
+const goBlog = () => {
+  router.push('/blog');
+};
 </script>
 
 <template>
   <div class="wrap">
     <TheHeader />
-    <main class="main"><MainTodo /></main>
+    <div>
+      <router-link to="/">Todo</router-link>
+      | <router-link to="/about">About</router-link>
+      | <span @click="goBlog">Blog</span>
+      | <router-link to="/blog/1">Blog1</router-link>
+      | <router-link to="/blog/2">Blog2</router-link>
+    </div>
+    <main class="main"><router-view /></main>
     <TheFooter />
   </div>
 </template>
