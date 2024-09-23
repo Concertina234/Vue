@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import type { PostResponse } from '.Blog.vue';
+import type { PostResponse } from '@/views/Blog.vue';
 
 const route = useRoute();
 const id = route.params.id;
