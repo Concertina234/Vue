@@ -6,6 +6,9 @@ import ButtonAdd from '@/components/ButtonAdd.vue';
 import ButtonDel from '@/components/ButtonDel.vue';
 import ButtonEdit from '@/components/ButtonEdit.vue';
 import ButtonShow from '@/components/ButtonShow.vue';
+import { useCounterStore } from '@/stores/counter';
+
+const counter = useCounterStore();
 
 const todo = ref<string | undefined>();
 const isEdit = ref(false);
@@ -68,6 +71,10 @@ const changeCheck = (id: number) => {
   <div class="finCount">
     <span>完了：{{ countFin }}、</span>
     <span>未完了：{{ todoList.length - countFin }}</span>
+  </div>
+
+  <div>
+    {{ counter.count }}
   </div>
 </template>
 
