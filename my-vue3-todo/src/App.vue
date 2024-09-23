@@ -13,13 +13,11 @@ const goBlog = () => {
 <template>
   <div class="wrap">
     <TheHeader />
-    <div>
+    <nav>
       <router-link to="/">Todo</router-link>
       | <router-link to="/about">About</router-link>
-      | <span @click="goBlog">Blog</span>
-      | <router-link to="/blog/1">Blog1</router-link>
-      | <router-link to="/blog/2">Blog2</router-link>
-    </div>
+      | <router-link to="/blog">Blog</router-link>
+    </nav>
     <main class="main"><router-view /></main>
     <TheFooter />
   </div>

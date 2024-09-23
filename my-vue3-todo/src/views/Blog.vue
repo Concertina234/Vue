@@ -1,17 +1,53 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
 
-const route = useRoute();
+export type PostResponse = {
+  userId: number,
+  id: number,
+  title: string,
+  body: string
+};
 
-const id = ref(route.params.id);
+const posts = ref<PostResponse[]>([]);
+const fetchData = async () => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    posts.value = await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
 
-watch(route, () => {
-  id.value = route.params.id;
-})
+onMounted(fetchData);
 </script>
 
 <template>
-  <h1>blog page</h1>
-  <p>blog id = {{ id }}</p>
+  <ul>
+    <li v-for="post in posts" :key="post.id">
+      {{ post.id }}:
+      <router-link :to="`/blog/${post.id}`">{{ post.title }}</router-link>
+    </li>
+  </ul>
 </template>
+
+<style scoped>
+ul {
+  margin-top: 12px;
+}
+
+li {
+  padding: 8px;
+  margin-bottom: 8px;
+  list-style: none;
+  border: 1px solid #ccc;
+}
+
+li:hover {
+  background-color: #eee;
+}
+
+a {
+  color: #333;
+  list-style: none;
+}
+</style>
