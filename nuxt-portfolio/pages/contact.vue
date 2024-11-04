@@ -15,3 +15,12 @@
     </div>
   </div>
 </template>
+
+<script setup>
+  useHead({
+    title: "コンタクト",
+    meta: [
+      {name: "description", content: "コンタクトページです"}
+    ],
+  })
+</script>

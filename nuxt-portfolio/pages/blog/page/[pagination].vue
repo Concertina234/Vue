@@ -21,13 +21,17 @@
 </template>
 
 <script setup>
+
+import Pagination from '../../../components/pagination.vue';
+
   const blogsPerPage = 5
-  const { data } = await useAsyncData("blogQuery", () => queryContent("/blog").sort({id: -1}).limit(blogsPerPage).find())
+  const currentPage = useRoute().params.pagination
+  const { data } = await useAsyncData("blogQuery", () => queryContent("/blog").sort({id: -1}).limit(blogsPerPage).skip(blogsPerPage * (currentPage - 1)).find())
   const allBlogs = await queryContent("/blog").find()
   const numberPages = Math.ceil(allBlogs.length / blogsPerPage)
-  
+
   useHead({
-    title: "ブログ",
+    title: `ブログ | ${currentPage}`,
     meta: [
       {name: "description", content: "ブログページです"}
     ],
